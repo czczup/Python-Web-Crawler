@@ -30,10 +30,12 @@ r.content            HTTP响应内容的二进制形式
 
 
 爬取网页的通用代码框架
-•理解Requestsku的异常
+•理解Requests库的异常
 requests.ConnectionError        网络连接错误异常，如DNS查询失败、拒绝连接等
 requests.HTTPError              HTTP错误异常
 requests.URLRequired            URL缺失异常
 requests.TooManyRedirects       超过最大重定向次数，产生重定向异常
 requests.ConnectTimeout         连接远程服务器超时异常
 requests.Timeout                请求URL超时，产生超时异常
+
+r.raise_for_status()            如果不是200，产生异常requests.HTTPError
