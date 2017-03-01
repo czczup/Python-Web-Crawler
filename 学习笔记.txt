@@ -39,3 +39,109 @@ requests.ConnectTimeout         连接远程服务器超时异常
 requests.Timeout                请求URL超时，产生超时异常
 
 r.raise_for_status()            如果不是200，产生异常requests.HTTPError
+
+HTTP协议
+Hypertext Transfer Protocol,超文本传输协议
+HTTP是一个基于"请求与相应"模式的、无状态的应用层协议
+HTTP协议一般采用URL作为定位网络资源的标识
+URL格式 http://host[:port][path]
+host:合法的Internet主机域名或IP地址
+port:端口号，缺省端口为80
+path:请求资源的路径
+
+HTTP URL理解:
+URL是通过http协议存取资源的Internet路径，一个URL对应一个数据资源
+
+HTTP协议对资源的操作
+GET      请求获取URL位置的资源
+HEAD     请求获取URL位置资源的响应报告，即获得该资源的头部信息
+POST     请求向URL位置的资源后附加新的数据
+PUT      请求向URL位置存储一个资源，覆盖原URL位置的资源
+PATCH    请求局部更新URL位置的资源，即改变该处资源的部分内容
+DELETE   请求删除URL位置存储的资源
+
+理解PATCH和PUT的区别
+假设URL位置有一组数据UserInfo，包括UserID、UserName等20个字段
+需求：用户修改了UserName，其他不变
+•采用PATCH，仅向URL提交UserName的局部更新请求(节省网络带宽)
+•采用PUT，必须将所有20个字段一并提交到URL，未提交字段将被删除
+HTTP协议与Requests库的功能是一一对应的
+
+
+
+requests.request(method,url,**kwargs)
+•method:请求方式，对应get/put/post等7种方法
+r = requests.request('GET',url,**kwargs)
+r = requests.request('HEAD',url,**kwargs)
+r = requests.request('POST',url,**kwargs)
+r = requests.request('PUT',url,**kwargs)
+r = requests.request('PATCH',url,**kwargs)
+r = requests.request('delete',url,**kwargs)
+r = requests.request('OPTIONS',url,**kwargs)
+•url:拟获取页面的url链接
+•**kwargs:控制访问的参数，共13个
+
+params：字典或字节序列，作为参数增加到url中
+>>> kv = {'key1':'value1','key2':'value2'}
+>>> r = requests.request('GET','http://python123.io/ws',params=kv)
+>>>print(r.url)
+http://python123.io/ws?key1=value1&key2=value2
+
+data:字典、字节序列或文件对象，作为Request的内容
+>>> kv = {'key1':'value1','key2':'value2'}
+>>> r = requests.request('POST','http://python123.io/ws',data=kv)
+>>> body = '主体内容'
+>>> r = requests.request('POST','http://python123.io/ws',data=body)
+
+json:JSON格式的数据，作为Request的内容
+>>> kv = {'key1':'value1'}
+>>> r = requests.request('POST','http://python123.io/ws',json=kv)
+
+headers:字典,HTTP定制头
+>>> hd = {'user-agent':'Chrome/10'}
+>>> r = requests.request('POST','http://python123.io/ws',headers=hd)
+
+cookies:字典或CookieJar,Request中的cookie
+auth:元组，支持HTTP认证功能
+
+files:字典类型,传输文件
+>>> fs = {'file':open('data.xls','rn')}
+>>> r = requests.request('POST','http://python123.io/ws',files=fs)
+
+timeout:设定超时时间，秒为单位
+>>> r = requests.request('GET','http://www.baidu.com',timeout=10)
+
+proxies:字典类型,设定访问代理服务器，可以增加登录认证
+>>> pxs = {'http':'http://user:pass@10.10.10.1:1234'
+           'https':'https://10.10.10.1:4321'  }
+>>> r = requests.request('http://www.baidu.com',proxies=pxs)
+
+allow_redirects:True/False,默认为True,重定向开关
+stream:True/False,默认为True,获取内容立即下载开关
+verify:True/False,默认为True,认证SSL证书开关
+cert:本地SSL证书路径
+
+requests.head(url,**kwargs)
+url:拟获取页面的url链接
+**kwargs:13个控制访问的参数
+
+requests.post(url,data=None,json=None,**kwargs)
+url:拟更新页面的url链接
+data:字典、字节序列或文件，Request的内容
+json:JSON格式的数据，Request的内容
+**kwargs:11个控制访问的参数
+
+requests.put(url,data=None,**kwargs)
+url:拟更新页面的url链接
+data:字典、字节序列或文件，Request的内容
+**kwargs:12个控制访问的参数
+
+requests.patch(url,data=None,**kwargs)
+url:拟更新页面的url链接
+data:字典、字节序列或文件，Request的内容
+**kwargs:12个控制访问的参数
+
+requests.delete(url,**kwargs)
+url:拟更新页面的url链接
+**kwargs:13个控制访问的参数
+
