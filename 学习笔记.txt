@@ -116,6 +116,8 @@ proxies:字典类型,设定访问代理服务器，可以增加登录认证
            'https':'https://10.10.10.1:4321'  }
 >>> r = requests.request('http://www.baidu.com',proxies=pxs)
 
+
+
 allow_redirects:True/False,默认为True,重定向开关
 stream:True/False,默认为True,获取内容立即下载开关
 verify:True/False,默认为True,认证SSL证书开关
@@ -145,3 +147,37 @@ requests.delete(url,**kwargs)
 url:拟更新页面的url链接
 **kwargs:13个控制访问的参数
 
+
+网路爬虫的尺寸
+
+小规模，数据量小，爬取速度不敏感    爬取网页，玩转网页        Requests库
+中规模，数据规模较大，爬取速度敏感  爬取网站，爬取系列网站    Scrapy库
+大规模，搜索引擎，爬取速度关键      爬取全网                 定制开发
+
+       
+网络爬虫引发的问题
+•网络爬虫的骚扰
+    •受限于编写水平和目的，网路爬虫将会为web服务器带来巨大的资源开销
+•网络爬虫的法律风险
+    •服务器上的数据有产权归属
+    •网络爬虫获取数据后牟利将带来法律风险
+•网络爬虫泄露隐私
+    •网络爬虫可能具备突破简单访问控制的能力，获得被保护数据从而泄露个人隐私
+
+网络爬虫的限制
+•来源审查：判断User-Agent进行限制
+    •检查来访HTTP协议头的User-Agent域，只响应浏览器或友好爬虫的访问
+•发布公告:Robots协议
+    •告知所有爬虫网站dev爬取策略，要求爬虫遵守
+
+Robots协议
+Robot Exclusion Standard 网络爬虫排除标准
+作用：网站告知网络爬虫哪些页面可以抓取，哪些不行
+形式：在网站根目录下的robots.txt文件
+基本语法：# 注释,*代表所有,/代表根目录
+User-agent:*
+Disallow:/
+
+Robots协议的使用
+网络爬虫：自动或人工识别robots.txt，再进行内容爬取
+约束性：Robots协议是建议但非约束性的，网络爬虫可以不遵守，但存在法律风险
