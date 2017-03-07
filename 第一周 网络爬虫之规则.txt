@@ -1,4 +1,6 @@
-﻿•Requests库的7个主要方法
+﻿第一周 网络爬虫之规则
+
+•Requests库的7个主要方法
       方法                             说明
 requests.requests()   构造一个请求，支撑以下各方法的基础方法
 requests.get()        获取HTML网页的主要方法，对应于HTTP的GET

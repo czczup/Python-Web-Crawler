@@ -1,0 +1,126 @@
+﻿Beautiful Soup库入门
+
+如何使用BeautifulSoup库
+>>> from bs4 import BeautifulSoup
+>>> soup = BeautifulSoup('<p>data</p>','html.parser')
+
+Beautiful Soup库的理解
+•Beautiful Soup库是解析、遍历、维护"标签树"的功能库
+•<p class="title">...</p>
+•p:名称,成对出现
+•class="title":属性Attributes,0个或多个
+
+Beautiful Soup库的引用
+•Beautiful Soup库,也叫beautifulsoup4或bs4
+    •from bs4 import BeautifulSoup
+    •import bs4
+>>> from bs4 import BeautifulSoup
+>>> soup = BeautifulSoup("<html>data</html>","html.parser")
+>>> soup2 = BeautifulSoup(open("D://demo.html"),"html.parser")
+BeautifulSoup对应一个HTML/XML文档的全部内容
+
+Beautiful Soup库解析器
+     解析器               使用方法                              条件
+bs4的HTML解析器      BeautifulSoup(mk,'html.parser')      安装bs4
+lxml的HTML解析器     BeautifulSoup(mk,'lxml')             pip install lxml
+lxml的XML解析器      BeautifulSoup(mk,'xml')              pip install lxml
+html5lib的解析器     BeautifulSoup(mk,'html5lib')         pip install html5lib
+
+Beautiful Soup类的基本元素
+Tag                 标签,最基本的信息组织单元,分别用<>和</>表明开头和结尾
+Name                标签的名字,<p>...</p>的名字是'p',格式:<tag>.name
+Attributes          标签的属性,字典形式组织,格式:<tag>.attrs
+NavigableString     标签内非属性字符串,<>...</>中的字符串,格式:<tag>.string
+Comment             标签内字符串的注释部分,一种特殊的Comment类型
+
+
+基于bs4库的HTML内容遍历方法
+•下行遍历
+.contents          子节点的列表，将<tag>所有儿子节点存入列表
+.children          子节点的迭代类型，与.contents类似，用于循环遍历儿子节点
+.descendants       子孙节点的迭代类型，包含所有的子孙节点，用于循环遍
+for child in soup.body.children:
+    print(child)#遍历儿子节点
+for child in soup.body.descendants:
+    print(child)#遍历子孙节点
+
+•上行遍历
+.parent            节点的父亲标签
+.parents           节点先辈标签的迭代类型，用于循环遍历先辈节点
+>>> soup = BeautifulSoup(demo,"html.parser")
+>>> for parent in soup.a.parents:
+        if parents is None:
+            print(parent)
+        else:
+            print(parent.name)
+
+p
+body
+html
+[document]
+
+•平行遍历  
+.next_sibling         返回按照HTML文本顺序的下一个平行节点标签
+.previous_sibling     返回按照HTML文本顺序的上一个平行节点标签
+.next_sibilings       迭代类型，返回按照HTML文本顺序的后续所有平行节点标签
+.previous_sibilings   迭代类型，返回按照HTML文本顺序的前续所有平行节点标签
+平行遍历发生在同一个父亲节点名下的各节点间
+for sibling in soup.a.next_siblings:
+    print(sibling)
+for sibling in soup.a.previous_siblings:
+    print(sibling)
+
+基于bs4库的HTML格式输出
+•如何让<html>内容更加"友好"的显示
+•bs4库的prettify()方法
+print(soup.prettify())
+
+
+
+信息组织和提取方法
+
+信息的标记
+•标记后的信息可以形成信息组织结构，增加信息维度
+•标记后的信息可用于通信、存储或展示
+•标记的结构与信息一样具有重要价值
+•标记后的信息更利于程序理解和运用
+
+HTML是WWW的信息组织方式
+可以通过预定义的标签将不同类型的内容组织起来
+
+
+信息标记的三种形式
+XML:eXtensible Markup Language
+JSON:JavaScript Object Notation
+     有类型的键值对key:value
+     •"key":"value"
+     •"key":["value1","value2"]
+     •"key":{"subkey":"subvalue"}
+YAML:YAML Ain't Markup Language
+     •key:value
+     •key:#Comment
+     •-value1
+      -value2
+     •key:
+          subkey:subvalue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
