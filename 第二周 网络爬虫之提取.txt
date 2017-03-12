@@ -36,9 +36,9 @@ Comment             标签内字符串的注释部分,一种特殊的Comment类�
 
 基于bs4库的HTML内容遍历方法
 •下行遍历
-.contents          子节点的列表，将<tag>所有儿子节点存入列表
-.children          子节点的迭代类型，与.contents类似，用于循环遍历儿子节点
-.descendants       子孙节点的迭代类型，包含所有的子孙节点，用于循环遍
+.contents          子节点的列表,将<tag>所有儿子节点存入列表
+.children          子节点的迭代类型,与.contents类似,用于循环遍历儿子节点
+.descendants       子孙节点的迭代类型,包含所有的子孙节点,用于循环遍
 for child in soup.body.children:
     print(child)#遍历儿子节点
 for child in soup.body.descendants:
@@ -46,7 +46,7 @@ for child in soup.body.descendants:
 
 •上行遍历
 .parent            节点的父亲标签
-.parents           节点先辈标签的迭代类型，用于循环遍历先辈节点
+.parents           节点先辈标签的迭代类型,用于循环遍历先辈节点
 >>> soup = BeautifulSoup(demo,"html.parser")
 >>> for parent in soup.a.parents:
         if parents is None:
@@ -62,8 +62,8 @@ html
 •平行遍历  
 .next_sibling         返回按照HTML文本顺序的下一个平行节点标签
 .previous_sibling     返回按照HTML文本顺序的上一个平行节点标签
-.next_sibilings       迭代类型，返回按照HTML文本顺序的后续所有平行节点标签
-.previous_sibilings   迭代类型，返回按照HTML文本顺序的前续所有平行节点标签
+.next_sibilings       迭代类型,返回按照HTML文本顺序的后续所有平行节点标签
+.previous_sibilings   迭代类型,返回按照HTML文本顺序的前续所有平行节点标签
 平行遍历发生在同一个父亲节点名下的各节点间
 for sibling in soup.a.next_siblings:
     print(sibling)
@@ -80,7 +80,7 @@ print(soup.prettify())
 信息组织和提取方法
 
 信息的标记
-•标记后的信息可以形成信息组织结构，增加信息维度
+•标记后的信息可以形成信息组织结构,增加信息维度
 •标记后的信息可用于通信、存储或展示
 •标记的结构与信息一样具有重要价值
 •标记后的信息更利于程序理解和运用
@@ -91,30 +91,79 @@ HTML是WWW的信息组织方式
 
 信息标记的三种形式
 XML:eXtensible Markup Language
+    •<name>...</name>
+    •<name />
+    •<!--      -->
 JSON:JavaScript Object Notation
-     有类型的键值对key:value
-     •"key":"value"
-     •"key":["value1","value2"]
-     •"key":{"subkey":"subvalue"}
+    有类型的键值对key:value
+    •"key":"value"
+    •"key":["value1","value2"]
+    •"key":{"subkey":"subvalue"}
 YAML:YAML Ain't Markup Language
-     •key:value
-     •key:#Comment
-     •-value1
-      -value2
-     •key:
-          subkey:subvalue
+    •key:value
+    •key:#Comment
+    •-value1
+    -value2
+    •key:
+        subkey:subvalue
+
+三种信息标记形式的比较
+•XML:最早的通用信息标记语言,可扩展性好,但繁琐
+•JSON:信息有类型,适合程序处理,较XML简洁
+•YAML:信息无类型,文本信息比例最高,可读性好
+
+•XML:Internet上的信息交互与传递
+•JSON:移动应用云端和节点的信息通信，无注释
+•YAML:各类系统的配置文件，有注释易读
+
+信息提取的一般方法
+
+•方法一：完整解析信息的标记形式，再提取关键信息
+需要标记解析器，例如bs4库的标签树遍历
+优点：信息解析准确
+缺点：提取过程繁琐，速度慢
+•方法二：无视标记形式，直接搜索关键信息
+对信息的文本查找函数即可
+优点：提取过程简洁，速度较快
+缺点：提取结果准确性与信息内容相关
+•融合方法：
+结合形式解析与搜索方法，提取关键信息
+需要标记解析器及文本查找函数
+
+实例
+提取HTML中的所有URL连接
+思路:1.搜索到所有<a>标签
+     2.解析<a>标签格式，提取href后的链接内容
+
+
+基于bs4库的HTML内容查找方法
+<>.find_all(name,attrs,recursive,string,**kwargs)
+返回一个列表类型，存储查找的结果
+•name：对标签名称的检索字符串
+•attrs:对标签属性值的检索字符串，可标注属性检索
+•recursive:是否对子孙全部检索，默认为True
+•string:对标签中的字符串域检索字符串
+简写形式
+•<tag>(..)等价于<tag>.find_all(..)
+•soup(..)等价于soup.find_all(..)
+
+<>.find()                     搜索且只返回一个结果，字符串类型
+<>.find_parents()             在先辈节点中搜索，返回列表类型
+<>.find_parent()              在先辈节点中返回一个结果，字符串类型
+<>.find_next_siblings()       在后续平行节点中搜索，返回列表类型
+<>.find_next_sibling()        在后续平行节点中返回一个结果，字符串类型
+<>.find_previous_siblings()   在前续平行节点中搜索，返回列表类型
+<>.find_previous_sibling()    在前续平行节点中返回一个结果，字符串类型
 
 
 
-
-
-
-
-
-
-
-
-
+中国大学排名爬虫
+步骤1：从网络上获取大学排名网页内容
+    getHTMLText()
+步骤2：提取网页内容中信息到合适的数据结构
+    fillUnivList()
+步骤3：利用数据结构展示并输出结果
+    printUnivList()
 
 
 
