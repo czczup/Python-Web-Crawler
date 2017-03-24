@@ -45,8 +45,8 @@ def getResponse(param,code='utf-8'):
 #从图片原网址下载图片
 def Download_Pictures(url):
     root = address +r'\%s'%word                 #为每一个关键词建立根目录
-    if not os.path.exists(root):                #若根目录不存在则创建目录
-        os.mkdir(root)
+    if not os.path.exists(root):                #若不存在则创建目录
+        os.makedirs(root)
     try:
         filepath = os.path.join(root,'%d.jpg'%(count[1]+1))
         r = requests.get(url,timeout=1)         #下载每张图片
@@ -56,7 +56,6 @@ def Download_Pictures(url):
             f.close()
             count[1] = count[1] + 1
     except:                                     #若下载失败则跳过
-        #count[1] = count[1] - 1                 #保持文件命名的连续
         return ""
 if __name__ == '__main__':
     #爬虫所需的三个参数
