@@ -1,4 +1,4 @@
-#CrawBaiduStocksA.py
+# CrawBaiduStocksA.py
 import requests
 from bs4 import BeautifulSoup
 import traceback
@@ -13,7 +13,7 @@ def getHTMLText(url,code='utf-8'):
     except:
         return ""
  
-def getStockList(lst, stockURL):
+def getStockList(stockURL, lst):
     html = getHTMLText(stockURL,'GB2312')
     soup = BeautifulSoup(html, 'html.parser') 
     a = soup.find_all('a')
@@ -54,12 +54,13 @@ def getStockInfo(lst, stockURL, fpath):
             count = count + 1
             print('\r当前速度: {:.2f}%'.format(count*100/len(lst)),end='')
             continue
- 
+
+
 def main():
     stock_list_url = 'http://quote.eastmoney.com/stocklist.html'
     stock_info_url = 'https://gupiao.baidu.com/stock/'
     output_file = 'D://BaiduStockInfo.txt'
-    slist=[]
+    slist = []
     getStockList(slist, stock_list_url)
     getStockInfo(slist, stock_info_url, output_file)
  

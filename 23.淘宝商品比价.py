@@ -1,6 +1,5 @@
 import requests
 import re
-
 def getHTMLText(url):
     try:
         r = requests.get(url,timeout = 30)
@@ -9,7 +8,6 @@ def getHTMLText(url):
         return r.text
     except:
         return ""
-
 def parsePage(ilt,html):
     try:
         plt = re.findall(r'\"view_price\"\:\"[\d\.]*\"',html)
@@ -20,7 +18,6 @@ def parsePage(ilt,html):
             ilt.append([price,title])
     except:
         print("")
-            
 def printGoodsList(ilt):
     tplt = "{:4}\t{:8}\t{:8}"
     print(tplt.format("序号","价格","商品名称"))
