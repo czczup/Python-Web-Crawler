@@ -88,7 +88,7 @@ re.S re.DOTALL		正则表达式中的.操作符能够匹配所有字符,默认�
 
 re.match(pattern,string,flags=0)
 re.findall(pattern,string,flags=0)
-re.split(psttern,string,maxsplit=0,flags=0)
+re.split(pattern,string,maxsplit=0,flags=0)
 •maxsplit:最大分割数,剩余部分作为最后一个元素输出
 re.finditer(psttern,string,flags=0)
 re.sub(psttern,repl,string,count,flags=0)
